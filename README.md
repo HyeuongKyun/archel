@@ -6,3 +6,5 @@
 2022-10-28 브론즈1, 단어 뒤집기 , https://www.acmicpc.net/problem/9093
 
 2022-10-29 브론즈1, 소인수분해 , https://www.acmicpc.net/problem/11653
+
+2022-10-30 실버 4, 괄호 , https://www.acmicpc.net/problem/9012
