@@ -1,0 +1,48 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int n = Integer.parseInt(br.readLine());
+        int in;
+
+        int [] stack = new int [n];
+
+        int loc = -1; //배열 위치
+        int num = 1; //입력할 숫자
+
+        boolean no = false;
+
+        for(int i = 0; i < n; i++) {
+            in = Integer.parseInt(br.readLine());
+
+            if(no) continue;
+
+            while(num <= in) {
+                stack[++loc] = num++;
+                sb.append("+").append("\n");
+            }
+
+            if(num > in) {
+                if(stack[loc] > in) {
+                    no = true;
+                    continue;
+                }
+
+                while(loc > -1 && stack[loc] == in) {
+                    loc--;
+                    sb.append("-").append("\n");
+
+                }
+            }
+        }
+
+        if(no)
+            System.out.println("NO");
+        else
+            System.out.println(sb);
+    }
+}
