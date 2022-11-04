@@ -6,6 +6,7 @@ class Solution {
     static boolean[] v;//순열을 구하기 위한 방문기록
     static List<Integer> list;
     static boolean[] primArr;
+    static Set<Integer> set;
     
     public int solution(String numbers) {
         N = numbers.length();
@@ -42,7 +43,7 @@ class Solution {
 
 
         answer = 0;
-
+        set = new HashSet<>();
         for(int i=1;i<=N;i++){
             v = new boolean[N];
             list = new ArrayList<>();
@@ -51,6 +52,10 @@ class Solution {
 
         }
 
+        for(int i : set) {
+            if(!primArr[i]) answer++;
+        }
+        
         // System.out.println(answer);
         return answer;
 
@@ -65,11 +70,8 @@ class Solution {
             String temp = sb2.toString();
             int tempInt = Integer.parseInt(temp);
 
-
-            if(!primArr[tempInt]) {
-                primArr[tempInt] = true;
-                answer++;
-            }
+            set.add(tempInt);
+            
             return;
         }//기저파트
 
