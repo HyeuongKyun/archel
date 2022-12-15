@@ -1,3 +1,23 @@
+# 문제를 풀면서 알게된 알고리즘
+## 제곱근으로 근 소수 판별
+- 수가 너무 크고 에라토스테네스 처럼 여러번 소수를 판별 해야하는 경우가 효율이 안 좋을 때 사용
+- num이라는 숫자가 있을 때 , Math.sqrt(num) 까지만 소수인지 아닌지 판별하면 된다. 그러면 비용이 log(num)으로 되버린다.
+- Math.sqrt(num)까지만 소수인지 확인하면 되는 이유는 다음과 같다.
+- num이 합성수라면 2<=x<=sqrt(num) 인 x가 적어도 한번은 사용이 되어야 sqrt(num)보다 크거나 같은 수와 곱해 졌을 때 num이 될 수 있다.
+- 그런데 num을 x로 나누었을 때 한번도 나누어 떨어지지 않는다면 이는 소수이다.  
+
+## 소수 판별을 해주는 api는 없다.. ㅜㅜ 
+
+## K진수로 바꿔주는 함수 
+- int Num,int K;//10진수 숫자와 변환하고 싶은 진수
+- Integer.toString(Num,K);
+- Num을 K진수로 나타내 준다.
+## K진수를 10진수로 바꿔주는 함수
+- String Num,int K;//K진수로 나타낸 숫자(String임을 주의),K진수로 표현
+- Integer.parseInt(Num,K);
+- Num을 10진수로 변환해서 값을 반환해 준다.
+
+
 # [level 2] k진수에서 소수 개수 구하기 - 92335 
 
 [문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/92335) 
