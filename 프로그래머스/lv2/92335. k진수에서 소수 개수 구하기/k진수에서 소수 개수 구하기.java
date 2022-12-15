@@ -27,12 +27,12 @@ class Solution {
         // filed = new boolean[filedSize];
         // makeFiled();
         //필드를 만드는 비용이 너무 많이 드니까 그냥 숫자가 등장할 때마다 소수인지 확인하자
+        //근데 이때 사용한 방법이 제곱근 방식! 하나하나 확인해야할 때 유용한 방법
         
         //배열에서 소수 뽑아내기
         answer = 0;
         getPrime();
         
-        // System.out.println(Arrays.toString(arrK));
         return answer;
     }//main
     //여기서 시간초과 날꺼같다. 나겠다.
@@ -46,10 +46,8 @@ class Solution {
                 sb.append(String.valueOf(tempVal));
             } 
             else {
-                // System.out.println("not Run");
                 String str = sb.toString();
                 if(!str.equals("")){
-                    // System.out.println(str);
                     //다음 조사를 위해 초기화
                     sb = new StringBuilder();
                     double val = Double.parseDouble(str);
@@ -82,16 +80,6 @@ class Solution {
         }//if else if
     }//checkPrime
     
-    // private static void makeFiled(){
-    //     for(int i=2;i<filedSize;i++){
-    //         if(!filed[i]){
-    //             int ele=i;
-    //             for(int j=i;j<filedSize;i+=ele){
-    //                 filed[j]=true;
-    //             }//for
-    //         }//if
-    //     }
-    // }//makeFiled
     private static void fillArrK(){
         int tempN = n;
         int q = 15; //어차피 인덱스의 최대는 13이기 때문에 최대값으로 초기화
