@@ -16,7 +16,7 @@
 - String Num,int K;//K진수로 나타낸 숫자(String임을 주의),K진수로 표현
 - Integer.parseInt(Num,K);
 - Num을 10진수로 변환해서 값을 반환해 준다.
-
+### 만약 위에 2가지 방법을 알았다면 subString 방법을 이용해도 좋았을 것 같다.
 
 # [level 2] k진수에서 소수 개수 구하기 - 92335 
 
