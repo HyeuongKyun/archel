@@ -1,3 +1,66 @@
+더 나은 풀이  
+이유    1. 필요 없이 함수로 빼기 위해서 코드가 길어지는 것을 방지하였습니다.
+        2. 방문기록 v에 대해서 false를 안해도 되는 당위성이 충분히 느껴졌습니다.(아쉬움 : 좀 더  깊이 고민했다면 생각해낼 수 있지 않았을까...)
+        3. bfs에 대한 이해와 응용이 좋은 코드라고 생각합니다.
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Solution {
+
+    static class Node {
+        String next;
+        int edge;
+
+        public Node(String next, int edge) {
+            this.next = next;
+            this.edge = edge;
+        }
+    }
+
+    public int solution(String begin, String target, String[] words) {
+        int n = words.length, ans = 0;
+
+        // for (int i=0; i<n; i++)
+        //  if (words[i] != target && i == n-1) return 0;
+
+        Queue<Node> q = new LinkedList<>();
+
+
+        boolean[] visit = new boolean[n];
+        q.add(new Node(begin, 0));
+
+        while(!q.isEmpty()) {
+            Node cur = q.poll();
+            if (cur.next.equals(target)) {
+                ans = cur.edge;
+                break;
+            }
+
+            for (int i=0; i<n; i++) {
+                if (!visit[i] && isNext(cur.next, words[i])) {
+                    visit[i] = true;
+                    q.add(new Node(words[i], cur.edge + 1));
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    static boolean isNext(String cur, String n) {
+        int cnt = 0;
+        for (int i=0; i<n.length(); i++) {
+            if (cur.charAt(i) != n.charAt(i)) {
+                if (++ cnt > 1) return false;
+            }
+        }
+
+        return true;
+    }    
+}
+
+
 # [level 3] 단어 변환 - 43163 
 
 [문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43163) 
