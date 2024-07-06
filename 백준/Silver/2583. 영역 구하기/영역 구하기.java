@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     static boolean[][]  v; // 벽
@@ -15,6 +13,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         int M = Integer.parseInt(st.nextToken()); //y좌표, row
         int N = Integer.parseInt(st.nextToken()); //x좌표, col
@@ -44,11 +43,12 @@ public class Main {
                 }
         }
 
-        System.out.println(cnt);
-        width.sort(null);
+        sb.append(cnt+"\n");
+        Collections.sort(width);
         for(int i=0;i<width.size();i++)
-            System.out.printf("%d ",width.get(i));
+            sb.append(width.get(i) + " ");
 
+        System.out.println(sb.toString());
     }
 
     public static void dfs(int x, int y , int X, int Y){
