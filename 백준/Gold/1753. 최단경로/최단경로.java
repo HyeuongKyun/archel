@@ -1,89 +1,83 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
+// 알고리즘 다익스트라
+// List<Node>[]를 활용해서 메모리 용량을 고려하고 필요한 인덱스만을 사용해여 시간 초과도 관리 nlogn
+// 가중치의 최대값이 10이기 때문에 10 * 20,000 = 200,000 을 넘을 수 없어서 INF =200,000으로 잡기
 public class Main {
+    public static int INF = 200_000;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+        Integer start = Integer.parseInt(new StringTokenizer(br.readLine()).nextToken());
 
-	static int V, E, K;
-	static ArrayList<Node>[] list;
-	static int[] dist;
-	static int INF = 9999_9999;
-	
-	public static void main(String[] args) {
-		// 정점의 개수 V
-		// 간선의 개수 E
-		// 정점은 1 ~ V
-		// 시작 정점 K
-		// u v w
-		// u 에서 v 로 가는 가중치 w
-		
-		int u, v, w;
-		
-		Scanner sc = new Scanner(System.in);
-		
-		V = sc.nextInt(); // 정점 개수
-		E = sc.nextInt(); // 간선 개수
-		K = sc.nextInt(); // 시작 정점
-		list = new ArrayList[V+1]; // 그래프
-		dist = new int[V+1]; // 방문
-		for(int i = 1; i <= V; i++) {
-			list[i] = new ArrayList<>();
-		}
-		Arrays.fill(dist, INF);
-		dist[K] = 0;
-		
-		for(int i = 0; i < E; i++) { // 간선 개수만큼 반복
-			u = sc.nextInt(); //출발
-            v = sc.nextInt(); //도착지
-            w = sc.nextInt(); //가중치
-            list[u].add(new Node(v, w));
-		}
-		
-		dijkstra();
-		
-		for (int i = 1; i <= V; i++) {
-            if (dist[i] == INF) {
-                System.out.println("INF");
-            } else {
-                System.out.println(dist[i]);
-            }
+        List<Node>[] nodeList = new ArrayList[V+1];
+        for(int i=1;i<=V;i++) nodeList[i] = new ArrayList<>();
+//        Arrays.fill(nodeList,new ArrayList<>());
+
+        for(int e=1;e<=E;e++){
+            st = new StringTokenizer(br.readLine());
+            int beforeV = Integer.parseInt(st.nextToken());
+            int AfterV = Integer.parseInt(st.nextToken());
+            int val = Integer.parseInt(st.nextToken());
+            nodeList[beforeV].add(new Node(AfterV, val));
         }
-	}
-	
-	public static void dijkstra() {
-		PriorityQueue<Node> queue = new PriorityQueue<>();
-        queue.add(new Node(K, 0));
-        while (!queue.isEmpty()) {
-            Node node = queue.poll();
-            int vertex = node.vertex;
-            int weight = node.weight;
-            if (dist[vertex] < weight) { //지금께 더 가중치가 크면 갱신할 필요가 없다.
-                continue;
-            }
-            for (int i = 0; i < list[vertex].size(); i++) {//해당 정점과 연결된 것들 탐색
-                int vertex2 = list[vertex].get(i).vertex;
-                int weight2 = list[vertex].get(i).weight + weight;
-                if (dist[vertex2] > weight2) { //지금께 더 최단경로라면 갱신해준다.
-                	dist[vertex2] = weight2;
-                    queue.add(new Node(vertex2, weight2));
-                }
-            }
+
+
+        int[] dp = new int[V+1];
+        Arrays.fill(dp,INF);
+
+        dijkstra(start, dp, nodeList, V, E);
+
+        StringBuilder sb = new StringBuilder();
+        for(int i=1;i<=V;i++) {
+            if(dp[i]==INF) sb.append("INF").append("\n");
+            else sb.append(dp[i]).append("\n");
         }
-	}
-}
-
-class Node implements Comparable<Node> {
-    int vertex;
-    int weight;
-
-    public Node(int vertex, int weight) {
-        this.vertex = vertex;
-        this.weight = weight;
+        System.out.println(sb);
     }
 
-    @Override
-    public int compareTo(Node o) {
-        return weight - o.weight;
+    public static void dijkstra(Integer start, int[] dp, List<Node>[] nodeList, int V, int E){
+
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        pq.add(new Node(start,0));
+        dp[start] = 0;
+
+        while (!pq.isEmpty()){
+            Node tmpNode = pq.poll();
+            int tmpVertex = tmpNode.vertex;
+            int tmpVal = tmpNode.val;
+            if(tmpVal > dp[tmpVertex]) continue;
+
+            for(int i=0;i<nodeList[tmpVertex].size();i++){
+                Node nextNode = nodeList[tmpVertex].get(i);
+                int nextVertex = nextNode.vertex;
+                int nextVal = nextNode.val;
+                if(dp[nextVertex] > dp[tmpVertex] + nextVal){
+                    dp[nextVertex] = dp[tmpVertex] + nextVal;
+                    pq.add(new Node(nextVertex, dp[nextVertex]));
+                }
+
+            }
+        }
+    }
+
+    public static class Node implements Comparable<Node>{
+        int vertex;
+        int val;
+
+        Node(int vertex, int val){
+            this.vertex = vertex;
+            this.val = val;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return this.val-o.val;
+        }
     }
 }
