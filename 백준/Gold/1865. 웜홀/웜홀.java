@@ -56,6 +56,7 @@ public class Main {
                         }
                     }
                 } else { //웜홀(단방향)
+                    //if(dist[S]==INF) continue; 이걸 넣으면 시작점과 분리되어 있는 곳에서의 음의 순환을 알 수 없다.
                     if (dist[S]+T<dist[E]) {
                         dist[E] = dist[S] + T;
                         if(n==N) {
