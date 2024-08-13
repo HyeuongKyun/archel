@@ -17,38 +17,33 @@ public class Main {
             rightMax = Math.max(rightMax,arr[k]);
         }
 
-        binarySearch(N, arr, rightMax);
+        System.out.println(binarySearch(K,N, arr, rightMax));
     }
 
-    public static void binarySearch(int N, int[] arr, long rightMax){
-        long left = 0;
+    public static long binarySearch(int K, int N, int[] arr, long rightMax){
+        long left = 1;
         long right = rightMax+1;
-        long mid = 0;
-        long cutCnt = 0;
+        long mid = (left + right) / 2;
+        int cutCnt = 0;
 
         while(left < right){
-
-            mid = (left + right) / 2;
             cutCnt = cut(arr, mid);
 
-            if(cutCnt<N) {
-                right = mid;
-            }
-            else {
+            if(cutCnt>=N)
                 left = mid +1;
-            }
+            else
+                right = mid;
 
+            mid = (left + right) / 2;
         }
-        System.out.println(left-1);
+        return mid-1;
     }
 
-
-    public static long cut(int[] arr, long len){
-        long total = 0;
-        for (int j : arr) {
-            total += j / len;
+    public static int cut(int[] arr, long len){
+        int total = 0;
+        for(int i=0;i<arr.length;i++) {
+            total += (int) (arr[i]/len);
         }
         return total;
     }
 }
-
