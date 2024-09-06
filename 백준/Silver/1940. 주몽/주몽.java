@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -14,16 +15,21 @@ public class Main {
         int[] arrInt = new int[N];
         for(int i=0;i<N;i++)
             arrInt[i] = Integer.parseInt(st.nextToken());
-        boolean[] v = new boolean[N];
-        for(int i=0;i<N;i++){
-            if(v[i]) continue;
-            for(int j=i+1;j<N;j++){
-                if(v[j]) continue;
-                if(M==arrInt[i]+arrInt[j]){
-                    v[i] = true; v[j] = true;
-                    answer++;
-                }
+
+        Arrays.sort(arrInt);
+
+        for(int i=0, j=N-1;i<j;){
+            int sum = arrInt[i]+arrInt[j];
+
+            if(sum==M){
+                answer++;
+                i++;
+                j--;
             }
+            else if(sum>M) j--;
+            else if(sum<M) i++;
+
+
         }
 
         System.out.println(answer);
